@@ -17,6 +17,14 @@ A html page that serves information to the Lindhard family.
     - Kim's work calender is in Outlook
 
 Prerequisite
-[Yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
 
-https://www.smashingmagazine.com/2019/07/yarn-workspaces-organize-project-codebase-pro/
+Start
+```shell
+yarn install
+yarn watch
+```
+## Setup inspiration
+
+[yarn workspaces organize project codebase](https://www.smashingmagazine.com/2019/07/yarn-workspaces-organize-project-codebase-pro/)  
+yarn workspaces organization
