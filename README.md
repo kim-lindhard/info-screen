@@ -15,3 +15,8 @@ A html page that serves information to the Lindhard family.
 - Work and of work calendars for members of the family
     - The family calendar is on Google
     - Kim's work calender is in Outlook
+
+Prerequisite
+[Yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+
+https://www.smashingmagazine.com/2019/07/yarn-workspaces-organize-project-codebase-pro/
