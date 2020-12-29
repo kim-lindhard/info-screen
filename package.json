@@ -1,6 +1,13 @@
 {
    "private": true,
    "name": "info-screen",
-   "workspaces": [],
-   "scripts": {}
+   "workspaces": [
+      "assemblies/*"
+   ],
+   "scripts": {
+      "watch": "concurrently --kill-others-on-fail \"yarn workspace server start\"  \"yarn workspace website start\""
+   },
+   "dependencies": {
+      "concurrently": "^5.3.0"
+   }
 }
