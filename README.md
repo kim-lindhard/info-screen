@@ -1,7 +1,7 @@
 # Info screen
 
 A html page that serves information to the Lindhard family. 
-
+The subject screen has a resolution of 1920x1080 px
 ## Things it will display
 - The weather until 17.00, this will include
     - The highest probability of rain
@@ -28,3 +28,4 @@ yarn watch
 
 [yarn workspaces organize project codebase](https://www.smashingmagazine.com/2019/07/yarn-workspaces-organize-project-codebase-pro/)  
 yarn workspaces organization
+
