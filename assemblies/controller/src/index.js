@@ -3,7 +3,7 @@ const { runHookApp } = require("@forrestjs/hooks");
 
 // Application's Services
 const serviceFetchq = require("@forrestjs/service-fetchq");
-const featureScedule = require("./feature-scedule");
+const featureRotatingImages = require("./features/rotating-images/feature-scedule");
 
 runHookApp({
   trace: "compact",
@@ -16,5 +16,5 @@ runHookApp({
     }
   },
   services: [serviceFetchq],
-  features: [featureScedule]
+  features: [featureRotatingImages]
 }).then(console.log("Application started"));
