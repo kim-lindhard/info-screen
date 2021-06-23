@@ -10,38 +10,17 @@ const registerQueue = (registerAction) =>  registerAction({
         }
     ]
 });
-/* const registerWorker = (registerAction, getContext) => registerAction({
-    hook: "$FETCHQ_REGISTER_WORKER",
-    name: "scheduler",
-    trace: __filename,
-    handler: [
-        {
-            queue: workflow1,
-            handler: async (doc) => {
-                console.log("I handle stuff", doc.payload);
 
-                // DO DB MAGIC HERE
-                // insert into images_scheduled (url, dont_show_before) values ('aaa',current_timestamp + (5 ||' minutes')::interval)
 
-                // Create hook for getting the schedule interval
+const workerHandler = async (doc, context) => {
 
-                //fetchq.query(q1);
-                const fetchq = getContext("fetchq");
-                const results = await fetchq.query('SELECT * FROM NOW()');
-
-                console.log(`The time: ${results.rows[0].now}`);
-
-                return doc.reschedule("+10s");
-            }
-        }
-    ]
-}); */
-
-const createWorkerHandler = (ctx) => async (doc) => {
-    console.log(">createWorkerHandler")
-    const fetchq = ctx.fetchq;
+    const fetchq = context.client;
+    console.log(context.name);
     const results = await fetchq.pool.query('SELECT * FROM NOW()');
-    console.log(results);
+    // DO DB MAGIC HERE
+    // insert into images_scheduled (url, dont_show_before) values ('aaa',current_timestamp + (5 ||' minutes')::interval)
+
+    console.log(results.rows[0]);
 
     return doc.reschedule("+5s");
   };
@@ -58,9 +37,8 @@ const registerWorker = (registerAction, getContext) => registerAction({
         return [
         {
             queue: workflow1,
-            handler: createWorkerHandler({
-            fetchq
-            }),
+            handler: workerHandler,
+            decorateContext: {name: "Kim"}
         },
         ];
     },
@@ -70,11 +48,15 @@ const startFeature = (registerAction, getContext) => registerAction({
     hook: "$START_FEATURE",
     name: "scheduler",
     trace: __filename,
-    handler: () => {
+    handler: async () => {
         const fetchq = getContext("fetchq");
+
+        await fetchq.pool.query(`select * from fetchq.queue_truncate('workflow1')`);
+
+
         fetchq.doc.push(workflow1, {
             payload: { createdAt: Date.now() },
-            nextIteration: "+2s"
+            nextIteration: "-1ms"
         });
     }
 });
