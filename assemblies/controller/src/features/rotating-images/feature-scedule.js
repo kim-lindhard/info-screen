@@ -1,12 +1,12 @@
-const workflow1 = "workflow1";
-
+const scheduleImagesQueue = "schedule_images";
+const featureName = "image-scheduler"
 const registerQueue = (registerAction) =>  registerAction({
     hook: "$FETCHQ_REGISTER_QUEUE",
-    name: "workflow",
+    name: featureName,
     trace: __filename,
     handler: [
         {
-            name: workflow1
+            name: scheduleImagesQueue
         }
     ]
 });
@@ -28,7 +28,7 @@ const workerHandler = async (doc, context) => {
 
 const registerWorker = (registerAction, getContext) => registerAction({
     hook: "$FETCHQ_REGISTER_WORKER",
-    name: "scheduler",
+    name: featureName,
     trace: __filename,
     handler: (_, { getContext }) => {
         const fetchq = getContext("fetchq");
@@ -36,7 +36,7 @@ const registerWorker = (registerAction, getContext) => registerAction({
 
         return [
         {
-            queue: workflow1,
+            queue: scheduleImagesQueue,
             handler: workerHandler,
             decorateContext: {name: "Kim"}
         },
@@ -46,15 +46,15 @@ const registerWorker = (registerAction, getContext) => registerAction({
 
 const startFeature = (registerAction, getContext) => registerAction({
     hook: "$START_FEATURE",
-    name: "scheduler",
+    name: featureName,
     trace: __filename,
     handler: async () => {
         const fetchq = getContext("fetchq");
 
-        await fetchq.pool.query(`select * from fetchq.queue_truncate('workflow1')`);
+        await fetchq.pool.query(`select * from fetchq.queue_truncate('${scheduleImagesQueue}')`);
 
 
-        fetchq.doc.push(workflow1, {
+        fetchq.doc.push(scheduleImagesQueue, {
             payload: { createdAt: Date.now() },
             nextIteration: "-1ms"
         });
