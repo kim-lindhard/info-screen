@@ -1,0 +1,3 @@
+table:
+  name: images_scheduled
+  schema: public
