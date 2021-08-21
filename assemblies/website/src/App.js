@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import Pictures from './pictures'
-import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: "http://hasura:8083/",
+  uri: "http://localhost:8083/v1/graphql",
   cache: new InMemoryCache(),
 });
 
