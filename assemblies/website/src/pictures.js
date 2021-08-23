@@ -1,34 +1,32 @@
 
-import React, { Component, Fragment } from "react";
+import React from "react";
 import { useQuery, gql } from "@apollo/client";
 
 
-const LinkList = () => {
-
-  const FEED_QUERY = gql`
+const IMAGE_QUERY = gql`
   query {
-    images_scheduled(limit: 1) {
+    images_scheduled(limit: 1, order_by: {dont_show_before: desc}) {
       dont_show_before
       url
     }
   }
 `;
 
-const data = useQuery(FEED_QUERY);
-console.log(data)
+const CurrentImage = () => {
 
+  const {data} = useQuery(IMAGE_QUERY);
 
   return (
-    <div>
-    {data && (
-      <>
-        <pre>{JSON.stringify(data.data, null, 2)}</pre>
-  
-      </>
-    )}
-  </div>
-);
+      <div>
+      {data && (
+        <>
+          <pre>{JSON.stringify(data
+            , null, 2)}</pre>
+    
+        </>
+      )}
+    </div>
+  );
 };
 
-export default LinkList;
-
+export default CurrentImage;
