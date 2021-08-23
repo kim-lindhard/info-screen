@@ -1,3 +1,10 @@
 table:
   name: images_scheduled
   schema: public
+select_permissions:
+- permission:
+    columns:
+    - url
+    - dont_show_before
+    filter: {}
+  role: anonymous
