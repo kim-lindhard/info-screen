@@ -22,7 +22,7 @@ const CurrentImage = () => {
         <>
           <pre>{JSON.stringify(data
             , null, 2)}</pre>
-    
+          <img src={data.images_scheduled[0].url}></img>
         </>
       )}
     </div>
