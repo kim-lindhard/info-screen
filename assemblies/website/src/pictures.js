@@ -1,10 +1,10 @@
 
 import React from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useSubscription, gql } from "@apollo/client";
 
 
-const IMAGE_QUERY = gql`
-  query {
+const IMAGE_SUBSCRIPTION = gql`
+  subscription {
     images_scheduled(limit: 1, order_by: {dont_show_before: desc}) {
       dont_show_before
       url
@@ -14,7 +14,7 @@ const IMAGE_QUERY = gql`
 
 const CurrentImage = () => {
 
-  const {data} = useQuery(IMAGE_QUERY);
+  const {data} = useSubscription(IMAGE_SUBSCRIPTION);
 
   return (
       <div>
