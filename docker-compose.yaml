@@ -1,11 +1,11 @@
 version: '2.1'
 
 services:
+
+  # Website -------------------------------------------------------------------
+
   website:
     image: node:15
-   # depends_on:
-   #   hasura:
-   #     condition: service_healthy
     ports:
       - ${APP_PORT:-8081}:8081
     environment:
@@ -14,6 +14,9 @@ services:
       - ./assemblies/website:/usr/src/website:delegated
     working_dir: /usr/src/website
     entrypoint: ['npm', 'run', 'start']
+
+  # Hasura --------------------------------------------------------------------
+
   hasura:
     image: hasura/graphql-engine:v2.0.7.cli-migrations-v3
     restart: always
@@ -36,6 +39,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+
+  # Database ------------------------------------------------------------------
+
   database:
     image: postgres:latest
     ports:
@@ -48,17 +54,15 @@ services:
         interval: 10s
         timeout: 5s
         retries: 60
+
   db-migration:
     build: 
       context: ./db
       dockerfile: Dockerfile    
     depends_on:
       - database
-    # volumes:
-    #   - ${PWD}/db/export:/tmp
     environment:
       - "DEBUG=1"                     # enable script debugging
-      #- "LOCAL_DEVELOPMENT=1"         # will try to CREATE DATABASE ${PGDATABASE}
       - "PGDATABASE=postgres"     # database name
       - "PGHOST=database"             # same as avove - docker-compose service name
       - "PGPORT=5432"                 # same as above
