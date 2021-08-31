@@ -1,0 +1,18 @@
+version: '2.1'
+
+
+services:
+
+  # Website -------------------------------------------------------------------
+
+  install-website-node-modules:
+    image: node:12-alpine
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .docker-data/website/node_modules:/usr/src/website/node_modules:delegated
+      - ./assemblies/website/package.json:/usr/src/website/package.json
+      - ./assemblies/website/package-lock.json:/usr/src/website/package-lock.json
+    working_dir: /usr/src/website
+    entrypoint: ['npm', 'install']
+    user: node

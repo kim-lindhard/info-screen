@@ -5,12 +5,13 @@ services:
   # Website -------------------------------------------------------------------
 
   website:
-    image: node:15
+    image: node:12-alpine
     ports:
       - ${APP_PORT:-8081}:8081
     environment:
       PORT: 8081
     volumes:
+      - .docker-data/website/node_modules:/usr/src/website/node_modules:cached
       - ./assemblies/website:/usr/src/website:delegated
     working_dir: /usr/src/website
     entrypoint: ['npm', 'run', 'start']
@@ -54,18 +55,3 @@ services:
         interval: 10s
         timeout: 5s
         retries: 60
-
-  db-migration:
-    build: 
-      context: ./db
-      dockerfile: Dockerfile    
-    depends_on:
-      - database
-    environment:
-      - "DEBUG=1"                     # enable script debugging
-      - "PGDATABASE=postgres"     # database name
-      - "PGHOST=database"             # same as avove - docker-compose service name
-      - "PGPORT=5432"                 # same as above
-      - "PGUSER=postgres"             # same as above
-      - "PGPASSWORD=postgres"                # same as above
-      - "PGSSLMODE=disable"           # ignore SSLMODE for local development (overwritten - see ./db/Dockerfile)

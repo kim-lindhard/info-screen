@@ -1,0 +1,21 @@
+version: '2.1'
+
+
+services:
+ 
+  # Database ------------------------------------------------------------------
+
+  db-migration:
+    build: 
+      context: ./db
+      dockerfile: Dockerfile    
+    depends_on:
+      - database
+    environment:
+      - "DEBUG=1"                     # enable script debugging
+      - "PGDATABASE=postgres"     # database name
+      - "PGHOST=database"             # same as avove - docker-compose service name
+      - "PGPORT=5432"                 # same as above
+      - "PGUSER=postgres"             # same as above
+      - "PGPASSWORD=postgres"                # same as above
+      - "PGSSLMODE=disable"           # ignore SSLMODE for local development (overwritten - see ./db/Dockerfile)
