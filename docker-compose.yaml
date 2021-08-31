@@ -4,6 +4,20 @@ services:
 
   # Website -------------------------------------------------------------------
 
+  controller:
+    image: node:16-alpine
+    ports:
+      - ${APP_PORT:-8081}:8081
+    environment:
+      PORT: 8081
+    volumes:
+      - .docker-data/controller/node_modules:/usr/src/controller/node_modules:cached
+      - ./assemblies/controller:/usr/src/controller:delegated
+    working_dir: /usr/src/controller
+    entrypoint: ['npm', 'run', 'start']
+
+  # Website -------------------------------------------------------------------
+
   website:
     image: node:16-alpine
     ports:
