@@ -2,14 +2,12 @@ version: '2.1'
 
 services:
 
-  # Website -------------------------------------------------------------------
+  # Controller ----------------------------------------------------------------
 
   controller:
     image: node:16-alpine
-    ports:
-      - ${APP_PORT:-8081}:8081
     environment:
-      PORT: 8081
+        PGSTRING: postgres://postgres:${POSTGRES_PASSWORD:-postgres}@database:5432/postgres
     volumes:
       - .docker-data/controller/node_modules:/usr/src/controller/node_modules:cached
       - ./assemblies/controller:/usr/src/controller:delegated

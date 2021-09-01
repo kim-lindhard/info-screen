@@ -3,6 +3,19 @@ version: '2.1'
 
 services:
 
+  # Controller ----------------------------------------------------------------
+
+  install-controller-node-modules:
+    image: node:16-alpine
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .docker-data/controller/node_modules:/usr/src/controller/node_modules:delegated
+      - ./assemblies/controller/package.json:/usr/src/controller/package.json
+      - ./assemblies/controller/package-lock.json:/usr/src/controller/package-lock.json
+    working_dir: /usr/src/controller
+    entrypoint: ['npm', 'install']
+
   # Website -------------------------------------------------------------------
 
   install-website-node-modules:
