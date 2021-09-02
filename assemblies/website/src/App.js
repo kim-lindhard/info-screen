@@ -18,7 +18,13 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-    <Pictures />
+       <div className="mainContainer">
+        <div id="weatherSection"><h1>Weather</h1></div>
+        <div id="calendarSection"><h1>Calendar</h1></div>
+        <div id="pictureSection">
+          <Pictures />
+        </div>
+      </div>
     </ApolloProvider>
   );
 }
