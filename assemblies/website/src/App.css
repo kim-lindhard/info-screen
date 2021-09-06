@@ -13,14 +13,19 @@ body {
 }
 
 .mainContainer > * {
-  padding: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
 }
 #weatherSection {
-  height: 10vh;
+  height: 15vh;
 }
 #calendarSection {
-  min-height: 40vh;
+  height: 40vh;
 }
 #pictureSection {
-  min-height: 50vh;
+  display: flex;
+  height: 45vh;
+  justify-content: center;
 }
