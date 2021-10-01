@@ -30,7 +30,7 @@ const scheduleImageInFiveProcess = async (doc, context) => {
     const fetchq = context.client;
     console.log(context.name);
 
-    await fetchq.pool.query(`insert into images_scheduled (url, dont_show_before) values ('${getImageUrl()}',current_timestamp + (1 ||' minutes')::interval)`);
+    await fetchq.pool.query(`insert into images_scheduled (url, dont_show_before) values ('${getImageUrl()}',current_timestamp + (0 ||' minutes')::interval)`);
     return doc.reschedule("+10s");
   };
 
