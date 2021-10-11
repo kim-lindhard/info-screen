@@ -15,7 +15,8 @@ const scheduleImageInFiveProcess = async (doc, context) => {
 
     const fetchq = context.client;
     
-    const imageUrls = context.getContext("getImageUrls").getImageUrls();
+    const imageUrls = await context.getContext("getImageUrls").getImageUrls();
+    
     const imageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)] 
 
 
